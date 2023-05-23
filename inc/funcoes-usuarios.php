@@ -76,3 +76,12 @@ function lerUmUsuario($conexao, $id){
     um ARRAY ASSOCIATIVO */
     return mysqli_fetch_assoc($resultado);
 } // fim/intenção LerUmUsuario
+
+// Usada em cada usuario-atualizada.php
+function atualizarUsuario($conexao, $id, $nome, $tipo, $email, $senha){
+    $sql = "UPDATE usuarios SET nome = '$nome', email = '$email',
+    senha = '$senha', tipo = '$tipo' WHERE id = $id";
+
+    mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
+
+} // Fim atualizarUsuario
