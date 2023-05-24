@@ -3,6 +3,13 @@
 require_once "../inc/funcoes-usuarios.php";
 require_once "../inc/cabecalho-admin.php";
 
+/* Se o usuário logado NÃO FOR admin... */
+if ($_SESSION['tipo'] != "admin "){
+	// Então redireciona para não autorizado
+	header("location:nao-autorizado.php");
+	exit;
+}
+
 /* Chamamos a função lerUsuarios que ao terminar de fazer
 os processos da consulta, ela retorna um array
 contendo os dados de cada usuário; e guardamos estes dados

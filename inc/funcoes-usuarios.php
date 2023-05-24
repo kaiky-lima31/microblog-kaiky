@@ -85,3 +85,17 @@ function atualizarUsuario($conexao, $id, $nome, $tipo, $email, $senha){
     mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 
 } // Fim atualizarUsuario
+
+
+// Usada emlogin.php
+function buscarUsuario($conexao, $email){
+    // Montando a consulta p/ procurar um usuário pelo e-mail informado
+    $sql = "SELECT * FROM usuarios WHERE email = '$email'";
+    
+    // Executando a consulta
+    $resultado = mysqli_query($conexao, $sql) or 
+                die(mysqli_error($conexao));
+
+    // Retornando
+    return mysqli_fetch_assoc($resultado);
+} // fim buscarUsuarios

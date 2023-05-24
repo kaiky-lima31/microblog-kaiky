@@ -2,6 +2,14 @@
 require_once "../inc/funcoes-usuarios.php";
 require_once "../inc/cabecalho-admin.php";
 
+/* Se o usuário logado NÃO FOR admin... */
+if ($_SESSION['tipo'] != "admin "){
+	// Então redireciona para não autorizado
+	header("location:nao-autorizado.php");
+	exit;
+}
+
+
 /* capturamos o parâmetro de URL */
 $id = $_GET["id"];
 
