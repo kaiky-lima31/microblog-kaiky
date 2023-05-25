@@ -35,8 +35,14 @@ function upload($arquivo){
 } // fim upload
 
 function lerNoticias($conexao){
-    // sql improvisado
-    $sql = "SELECT * FROM noticias ORDER BY data DESC";
+    $sql = "SELECT
+                noticias.id,
+                noticias.titulo,
+                noticias.data,
+                usuarios.nome
+            FROM noticias INNER JOIN usuarios
+            ON noticias.usuario_id = usuarios.id
+            ORDER BY data DESC";
 
     $resultado = mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 
