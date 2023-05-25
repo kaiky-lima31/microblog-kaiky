@@ -1,5 +1,28 @@
 <?php 
+require_once "../inc/funcoes-noticias.php";
 require_once "../inc/cabecalho-admin.php";
+
+if(isset($_POST['inserir'])){
+	$titulo = $_POST['titulo'];
+	$texto = $_POST['texto'];
+	$resumo = $_POST['resumo'];
+
+	// Pegando o id do usuário logado na sessão
+	$usuarioId = $_SESSION['id'];
+
+	/* capturando dados do arquivo através 
+	do array superGlobal $_FILES */
+	$imagem = $_FILES['imagem'];
+
+	// Executar a funçao de upload do ARQUIVO
+	upload($imagem);
+
+	// inserir os dados do banco (atenção ao nome da imagem).
+	inserirNoticia($conexao, $titulo, $texto, $resumo, $imagem['name'], $usuarioId);
+
+	// Redirecionar para a lista de notícias cadastradas
+	header("location:noticias.php");
+}
 ?>
 
 
@@ -10,7 +33,10 @@ require_once "../inc/cabecalho-admin.php";
 		Inserir nova notícia
 		</h2>
 				
-		<form class="mx-auto w-75" action="" method="post" id="form-inserir" name="form-inserir">            
+		<!-- ATRIBUTO VALENDO MULTIPART/FORM-DATA
+		NECESSÁRIO em formulários que receberão ARQUIVOS (imagens,
+		documentos, pdfs, planilhas) para processamento. -->
+		<form enctype="multipart/form-data" class="mx-auto w-75" action="" method="post" id="form-inserir" name="form-inserir">            
 
 			<div class="mb-3">
                 <label class="form-label" for="titulo">Título:</label>
