@@ -10,7 +10,32 @@ $idUsuario = $_SESSION['id'];
 $tipoUsuario = $_SESSION['tipo'];
 
 $noticia = lerUmaNoticia($conexao, $idNoticia, $idUsuario, $tipoUsuario);
-                                               
+
+if(isset($_POST['atualizar'])){
+    $titulo = $_POST['titulo'];
+    $texto = $_POST['texto'];
+    $resumo = $_POST['resumo'];
+
+    /*  Lógica/Algoritimo para a atualização da imagem (SE NECESSÀRIO) */
+
+    /* Se o campo imagem estiver vazio, então 
+    significa que o úsuario não quer trocar de imagem.
+    Ou seja, o sistema vai manter a referencia da imagem existente.  */
+    if(empty($_FILES['imagem']['name']) ){
+        $imagem = $_POST['imagem-existente'];
+    } else {
+    /* Caso contrário, então pegamos a referencia (nome/extensão)
+    da nova imagem e fazemos o processo de upload (do arquivo). */
+        $imagem = $_FILES['imagem']['name']; // nome.extensão
+        upload($_FILES['imagem']); // envio do arquivo pro servidor
+    }
+
+    atualizarNoticia($conexao, $titulo, $texto, $resumo,
+                    $imagem, $idNoticia, $idUsuario, $tipoUsuario);
+    
+    header("location.php");
+
+}  
 ?>
 
 
@@ -21,7 +46,7 @@ $noticia = lerUmaNoticia($conexao, $idNoticia, $idUsuario, $tipoUsuario);
             Atualizar dados da notícia
         </h2>
 
-        <form class="mx-auto w-75" action="" method="post" id="form-atualizar" name="form-atualizar">
+        <form enctype="multipart/form-data" class="mx-auto w-75" action="" method="post" id="form-atualizar" name="form-atualizar">
 
             <div class="mb-3">
                 <label class="form-label" for="titulo">Título:</label>
