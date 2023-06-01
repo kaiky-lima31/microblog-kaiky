@@ -12,6 +12,7 @@ de cada uma das noticias */
 $noticias = lerNoticias($conexao, $idUsuario, $tipoUsuario);
 $totalNoticias = count($noticias)
 
+
 ?>
 
 
