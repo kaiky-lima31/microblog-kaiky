@@ -116,3 +116,19 @@ function atualizarNoticia($conexao, $titulo, $texto, $resumo, $imagem, $idNotici
 
     mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 }// fim atualizarNoticia
+
+/* Usada em noticia-exclui.php */
+function excluirNoticia($conexao, $idNoticia, $idUsuarioLogado, $tipoUsuarioLogado){
+
+    if($tipoUsuarioLogado == 'admin'){
+        /* SQL do admin: pode apagar qualquer notícia pelo id */
+        $sql = "DELETE FROM noticias WHERE id = $idNoticia";
+    }else {
+        /* SQL do editor: pode apagar somente suas próprias noticias 
+        (pelo id da notícia e pelo seu próprio id) */
+        $sql = "DELETE FROM noticias WHERE id = $idNoticia
+                AND usuario_id = $idUsuarioLogado";
+    }
+
+    mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
+} // fim excluirNoticia 
